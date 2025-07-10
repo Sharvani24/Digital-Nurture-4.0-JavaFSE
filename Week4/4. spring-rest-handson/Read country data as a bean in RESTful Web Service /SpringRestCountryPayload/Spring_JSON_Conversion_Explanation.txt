@@ -1,0 +1,38 @@
+
+Spring Framework and JSON Payload to Bean Conversion Explanation
+=================================================================
+
+How Spring Converts JSON to Java Object (Bean)
+----------------------------------------------
+1. The @RequestBody annotation tells Spring to parse the JSON payload from the request body.
+2. Spring uses the Jackson library (default) to convert JSON into Java objects.
+3. During conversion:
+   - Jackson looks for matching property names in the JSON and the Java class.
+   - For each attribute in the JSON (e.g., "name"), Jackson constructs a method name:
+     - Capitalizes first letter: "Name"
+     - Prepends "get" or "set" → "getName"/"setName"
+   - Reflection API is used to invoke these methods.
+
+4. If the JSON field matches the property name in the bean, its setter is called.
+5. Spring constructs the `Country` object and injects it into the controller method.
+
+Example:
+--------
+Input JSON: {"code": "IN", "name": "India"}
+- setCode("IN") is called.
+- setName("India") is called.
+
+Incorrect Field Example:
+------------------------
+Input JSON: {"code": "IN", "nae": "India"}
+- setCode("IN") is called.
+- No setName() called since "nae" doesn't match → `name` remains null.
+
+Java Bean Naming Conventions
+-----------------------------
+- Properties are private.
+- Public getter and setter methods follow naming pattern:
+  - getPropertyName(), setPropertyName()
+- Method names use camelCase: e.g., setName, getName
+- Class name uses PascalCase: Country
+
