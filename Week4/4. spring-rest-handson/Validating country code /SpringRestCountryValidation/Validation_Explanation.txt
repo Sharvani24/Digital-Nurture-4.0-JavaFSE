@@ -1,0 +1,35 @@
+
+Spring Boot - Validation using javax.validation
+===============================================
+
+Controller Validation Logic
+---------------------------
+- The controller explicitly creates a ValidatorFactory and Validator.
+- It manually validates the object and checks constraint violations.
+- On violations, it throws a ResponseStatusException with error messages.
+
+Sample Curl Command:
+--------------------
+curl -i -H 'Content-Type: application/json' -X POST -d '{"code":"IND","name":"India"}' http://localhost:8090/countries
+
+Expected Response:
+------------------
+HTTP/1.1 400 Bad Request
+...
+{"message":"[Country code should be 2 characters]"}
+
+Disadvantage of This Approach
+-----------------------------
+- The validation logic is tightly coupled with the controller.
+- Each controller needs to repeat this boilerplate code.
+- Duplicates validation logic across different controllers (e.g., EmployeeController).
+- Breaks separation of concerns - validation should ideally be declarative and handled globally.
+
+Next Hands-On
+-------------
+- We will overcome this disadvantage using `@Valid` and `BindingResult`, or by global exception handling using `@ControllerAdvice`.
+
+Question
+--------
+Q: What needs to be done if there is another controller EmployeeController and similar validation is needed?
+A: The same validator setup and manual validation code would need to be duplicated in EmployeeController, which leads to code duplication and poor maintainability.
