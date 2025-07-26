@@ -1,0 +1,17 @@
+.container {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  margin-top: 20px;
+}
+
+.office-image {
+  width: 300px;
+  height: auto;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+
+p {
+  font-size: 18px;
+  margin: 5px 0;
+}
